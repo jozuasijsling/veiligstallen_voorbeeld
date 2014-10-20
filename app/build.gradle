@@ -1,0 +1,154 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        maven { url 'http://download.crashlytics.com/maven' }
+    }
+
+    dependencies {
+        // gradle plugins
+
+        /**
+         * Android APT plugin
+         *    Homepage: https://bitbucket.org/hvisser/android-apt
+         *    Usage: Annotation processor for compile time code generation
+         *    Author: Hugo Visser
+         *    License: Public Domain
+         */
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.4'
+
+        /**
+         * Hugo
+         *   Homepage: https://github.com/JakeWharton/hugo/
+         *   Usage: For annotation based debug method profile
+         *   Author: Jake Wharton
+         *   License: Apache License 2.0
+         */
+        classpath 'com.jakewharton.hugo:hugo-plugin:1.1.0'
+    }
+}
+apply plugin: 'com.android.application'
+apply plugin: 'idea'
+apply plugin: 'com.neenbedankt.android-apt'
+apply plugin: 'hugo'
+
+idea {
+    module {
+        downloadJavadoc = true
+        downloadSources = true
+    }
+}
+
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 20
+    buildToolsVersion "20.0.0"
+
+    defaultConfig {
+        applicationId "nl.binaryimpact.showcase"
+        minSdkVersion 16
+        targetSdkVersion 20
+        versionCode 1
+        versionName "0.0.1"
+    }
+    buildTypes {
+        release {
+            runProguard false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    packagingOptions {
+        exclude 'META-INF/services/javax.annotation.processing.Processor'
+    }
+    lintOptions {
+        disable 'InvalidPackage'
+    }
+}
+
+dependencies {
+
+    // A few common dependencies that shouldn't need much explaining
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.android.support:support-annotations:20.0.0' // Android Support Annotations
+    compile 'com.android.support:support-v13:20.0.0' // Android Support Library v13
+    compile 'com.google.android.gms:play-services:5.0.89'
+
+    /**
+     * Dagger
+     *  Homepage: http://square.github.io/dagger/
+     *  Usage: For general dependency injection
+     *  Author: Square Inc.
+     *  License: Apache License 2.0
+     */
+    apt 'com.squareup.dagger:dagger-compiler:1.2.1'
+    compile 'com.squareup.dagger:dagger:1.2.1'
+
+    /**
+     * ButterKnife
+     *  Homepage: http://jakewharton.github.io/butterknife/
+     *  Usage: For android view dependency injection
+     *  Author: Jake Wharton
+     *  License: Apache License 2.0
+     */
+    apt 'com.jakewharton:butterknife:5.1.2'
+    compile 'com.jakewharton:butterknife:5.1.2'
+
+    /**
+     * Cupboard
+     *  Homepage: https://bitbucket.org/qbusict/cupboard
+     *  Usage: For simplifying access to the local database
+     *  Author: Hugo Visser
+     *  License: Apache License 2.0
+     */
+    compile 'nl.qbusict:cupboard:2.0.0'
+
+    /**
+     * Timber
+     *  Homepage: https://github.com/JakeWharton/timber
+     *  Usage: For dynamic logging configs
+     *  Author: Jake Wharton
+     *  License: Apache License 2.0
+     */
+    compile 'com.jakewharton.timber:timber:2.4.1'
+
+    /**
+     * OkHttp
+     *   Homepage: http://square.github.io/okhttp/
+     *   Usage: For HTTP I/O that is optimized for mobile devices
+     *   Author: Square Inc.
+     *   License: Apache License 2.0
+     */
+    compile 'com.squareup.okhttp:okhttp:2.0.0'
+    compile 'com.squareup.okhttp:okhttp-urlconnection:2.0.0'
+
+    /**
+     * Otto
+     *   Homepage: http://square.github.io/otto/
+     *   Usage: For private inter-process communication using an Android optimized event-bus
+     *   Author: Square Inc.
+     *   License: Apache License 2.0
+     */
+    compile 'com.squareup:otto:1.3.5'
+
+    /**
+     * Retrofit
+     *   Homepage: http://square.github.io/retrofit/
+     *   Usage: For generating a REST api client
+     *   Author: Square Inc.
+     *   License: Apache License 2.0
+     */
+    compile 'com.squareup.retrofit:retrofit:1.6.1'
+
+    /**
+     * Simple-XML
+     *   Homepage: http://simple.sourceforge.net/
+     *   Usage: For annotation-based XML parsing
+     *   Author: Niall Gallagher
+     *   License: Apache License 2.0
+     */
+    compile('org.simpleframework:simple-xml:2.7.1'){
+        exclude module: 'stax'
+        exclude module: 'stax-api'
+        exclude module: 'xpp3'
+    }
+}
