@@ -26,10 +26,7 @@ import org.simpleframework.xml.Root;
 import java.util.List;
 
 import nl.binaryimpact.showcase.util.annotation.LocalGeneratedId;
-import nl.binaryimpact.showcase.util.annotation.UsedByDeserializers;
 
-/**
- */
 @Root(name = "Fietsenstalling")
 public class BikeShed {
 
@@ -57,7 +54,6 @@ public class BikeShed {
     @Element(name = "Beheerder") private String administrator;
     @Element(name = "BeheerderContact") private String administratorContact;
 
-    @UsedByDeserializers
     public BikeShed() {
     }
 

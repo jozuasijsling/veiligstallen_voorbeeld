@@ -24,8 +24,6 @@ import java.util.List;
 
 import nl.binaryimpact.showcase.model.veiligstallen.BikeShed;
 
-/**
- */
 public class BikeShedsResponse {
 
     @Element(name = "DateTime") private Date dateTime;

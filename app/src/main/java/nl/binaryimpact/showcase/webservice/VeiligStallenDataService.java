@@ -19,11 +19,9 @@ package nl.binaryimpact.showcase.webservice;
 import nl.binaryimpact.showcase.model.veiligstallen.response.BikeShedsResponse;
 import retrofit.http.GET;
 
-/**
- */
 public interface VeiligStallenDataService {
 
-    public static final String URL = "http://www.veiligstallen.nl/";
+    String URL = "http://www.veiligstallen.nl/";
 
     @GET("veiligstallen.xml")
     BikeShedsResponse getVeiligStallen();
