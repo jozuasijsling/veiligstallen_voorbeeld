@@ -19,10 +19,6 @@ package nl.binaryimpact.showcase.model.veiligstallen;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
-import nl.binaryimpact.showcase.util.annotation.UsedByDeserializers;
-
-/**
- */
 @Root(name = "Sectie")
 public class Section {
 
@@ -32,7 +28,6 @@ public class Section {
     @Element(name = "Vrij") private int unoccupied;
     @Element(name = "Bezet") private int occupied;
 
-    @UsedByDeserializers
     public Section() {
     }
 

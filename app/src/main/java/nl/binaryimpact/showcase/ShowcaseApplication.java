@@ -17,61 +17,19 @@
 package nl.binaryimpact.showcase;
 
 import android.app.Application;
-
-import java.util.Arrays;
-import java.util.List;
-
-import dagger.ObjectGraph;
-import nl.binaryimpact.showcase.log.DevelopmentProfileTree;
-import nl.binaryimpact.showcase.log.StagingProfileTree;
 import nl.binaryimpact.showcase.model.veiligstallen.OpeningHours;
-import nl.binaryimpact.showcase.util.module.AndroidModule;
-import nl.binaryimpact.showcase.util.module.ApiModule;
-import nl.binaryimpact.showcase.util.module.EventBusModule;
 import nl.binaryimpact.showcase.util.xml.OpeningsHoursConverter;
 import nl.qbusict.cupboard.CupboardBuilder;
 import nl.qbusict.cupboard.CupboardFactory;
-import timber.log.Timber;
 
-/**
- * Created by jozua on 2014/10/10.
- */
 public class ShowcaseApplication extends Application {
 
-    private ObjectGraph mObjectGraph;
+  @Override public void onCreate() {
+    super.onCreate();
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        mObjectGraph = ObjectGraph.create(getModules().toArray());
-
-        if (BuildConfig.DEBUG) {
-            Timber.plant(new DevelopmentProfileTree());
-        } else {
-            Timber.plant(new StagingProfileTree());
-        }
-
-        // enable cupboard annotations and register custom converters
-        CupboardFactory.setCupboard(new CupboardBuilder()
-                .useAnnotations()
-                .registerFieldConverter(OpeningHours.class, new OpeningsHoursConverter())
-                .build());
-    }
-
-    protected List<Object> getModules() {
-        return Arrays.asList(
-                new AndroidModule(this),
-                new ApiModule(),
-                new EventBusModule()
-        );
-    }
-
-    /**
-     * Gets the application's global object graph.
-     *
-     * @return The global object graph.
-     */
-    public ObjectGraph getObjectGraph() {
-        return mObjectGraph;
-    }
+    // enable cupboard annotations and register custom converters
+    CupboardFactory.setCupboard(new CupboardBuilder().useAnnotations()
+        .registerFieldConverter(OpeningHours.class, new OpeningsHoursConverter())
+        .build());
+  }
 }

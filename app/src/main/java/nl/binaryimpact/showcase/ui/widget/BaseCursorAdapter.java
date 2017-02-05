@@ -21,21 +21,20 @@ import android.widget.CursorAdapter;
 
 /**
  * Simplifies the construction of a cursor adapter for our purpose.
- * <p>
- * A cursor adapter can be initialized with a valid cursor, but we never
+ *
+ * <p>A cursor adapter can be initialized with a valid cursor, but we never
  * do that and always pass {@code null} instead. Also, a boolean can be used
  * to indicate whether the cursor should re-query the database when changes
- * are detected, but this executed on the UI thread and has been deprecated.
- * </p>
+ * are detected, but this executed on the UI thread and has been deprecated.</p>
  */
 public abstract class BaseCursorAdapter extends CursorAdapter {
 
-    /**
-     * Constructs a simplified {@link android.widget.CursorAdapter} using the given context.
-     *
-     * @param context the context
-     */
-    public BaseCursorAdapter(Context context) {
-        super(context, null, false);
-    }
+  /**
+   * Constructs a simplified {@link android.widget.CursorAdapter} using the given context.
+   *
+   * @param context the context
+   */
+  public BaseCursorAdapter(Context context) {
+    super(context, null, false);
+  }
 }
