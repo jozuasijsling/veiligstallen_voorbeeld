@@ -17,7 +17,7 @@
 package nl.binaryimpact.showcase.webservice;
 
 import nl.binaryimpact.showcase.model.veiligstallen.response.BikeShedsResponse;
-import retrofit.http.GET;
+import retrofit2.http.GET;
 
 public interface VeiligStallenDataService {
 

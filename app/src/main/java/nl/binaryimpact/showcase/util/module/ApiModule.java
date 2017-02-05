@@ -23,12 +23,9 @@ import com.google.gson.internal.bind.DateTypeAdapter;
 import java.util.Date;
 import nl.binaryimpact.showcase.json.GeneratedIdExclusionStrategy;
 import nl.binaryimpact.showcase.json.GsonIgnoreExclusionStrategy;
-import nl.binaryimpact.showcase.util.xml.SimpleXmlConverter;
 import nl.binaryimpact.showcase.webservice.VeiligStallenDataService;
-import retrofit.Endpoint;
-import retrofit.Endpoints;
-import retrofit.RestAdapter;
-import retrofit.converter.GsonConverter;
+import retrofit2.Retrofit;
+import retrofit2.converter.simplexml.SimpleXmlConverterFactory;
 
 /**
  * Provides API utilities and retrofit-backed service implementations.
@@ -50,19 +47,11 @@ public class ApiModule {
         .create();
   }
 
-  public RestAdapter provideRestAdapter() {
-    Endpoint endpoint = Endpoints.newFixedEndpoint(VeiligStallenDataService.URL);
-    return new RestAdapter.Builder().setLogLevel(RestAdapter.LogLevel.HEADERS)
-        .setEndpoint(endpoint)
-        .setConverter(new SimpleXmlConverter())
+  public VeiligStallenDataService provideDataService() {
+    SimpleXmlConverterFactory simpleXml = SimpleXmlConverterFactory.create(); // createNonStrict();
+    Retrofit retrofit = new Retrofit.Builder().baseUrl(VeiligStallenDataService.URL)
+        .addConverterFactory(simpleXml)
         .build();
-  }
-
-  public RestAdapter provideRestAdapter(Gson gson) {
-    Endpoint endpoint = Endpoints.newFixedEndpoint("https://maps.googleapis.com/maps/api/place/");
-    return new RestAdapter.Builder().setLogLevel(RestAdapter.LogLevel.HEADERS)
-        .setEndpoint(endpoint)
-        .setConverter(new GsonConverter(gson))
-        .build();
+    return retrofit.create(VeiligStallenDataService.class);
   }
 }
