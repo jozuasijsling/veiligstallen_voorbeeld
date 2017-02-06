@@ -24,5 +24,5 @@ public interface VeiligStallenDataService {
     String URL = "http://www.veiligstallen.nl/";
 
     @GET("veiligstallen.xml")
-    BikeShedsResponse getVeiligStallen();
+    BikeShedsResponse getDataSheet();
 }

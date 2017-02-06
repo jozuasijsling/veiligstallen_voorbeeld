@@ -33,5 +33,6 @@
       translatable="false">NS Stations</string>
   <string name="text_bike_shed_list_empty"
       translatable="false">Geen stallingen gevonden.</string>
+  <string name="title_activity_maps">Map</string>
 
 </resources>
