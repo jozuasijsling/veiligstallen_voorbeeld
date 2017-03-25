@@ -14,15 +14,14 @@
  * limitations under the License.
  */
 
-package nl.jozuasijsling.veiligstallen.view.screen
+package nl.jozuasijsling.veiligstallen.service
 
-import nl.jozuasijsling.veiligstallen.view.component.Map
-import nl.jozuasijsling.veiligstallen.view.component.SearchBar
+import nl.jozuasijsling.veiligstallen.service.dto.response.SafeStorageDto
+import retrofit2.http.GET
 
+const val SERVICE_URL = "http://www.veiligstallen.nl/"
 
-class MapScreen {
+interface SafeStorageService {
 
-    val map = Map()
-    val searchBar = SearchBar()
-
+    @get:GET("veiligstallen.xml") val safeStorage: SafeStorageDto
 }

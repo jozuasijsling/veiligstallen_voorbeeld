@@ -14,15 +14,10 @@
  * limitations under the License.
  */
 
-package nl.jozuasijsling.veiligstallen.view.screen
+package nl.jozuasijsling.veiligstallen.content.shed
 
-import nl.jozuasijsling.veiligstallen.view.component.Map
-import nl.jozuasijsling.veiligstallen.view.component.SearchBar
-
-
-class MapScreen {
-
-    val map = Map()
-    val searchBar = SearchBar()
-
-}
+data class InnerSection(val id: String,
+                        val name: String,
+                        val capacity: Int,
+                        val unoccupied: Int,
+                        val occupied: Int)

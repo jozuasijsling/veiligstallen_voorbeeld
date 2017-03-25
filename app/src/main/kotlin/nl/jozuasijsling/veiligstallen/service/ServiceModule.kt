@@ -14,15 +14,21 @@
  * limitations under the License.
  */
 
-package nl.jozuasijsling.veiligstallen.view.screen
+package nl.jozuasijsling.veiligstallen.service
 
-import nl.jozuasijsling.veiligstallen.view.component.Map
-import nl.jozuasijsling.veiligstallen.view.component.SearchBar
+import retrofit2.Retrofit
+import retrofit2.converter.simplexml.SimpleXmlConverterFactory
 
+/**
+ * Provides API utilities and retrofit-backed service implementations.
+ */
+class ServiceModule {
 
-class MapScreen {
-
-    val map = Map()
-    val searchBar = SearchBar()
-
+    fun provideDataService(): SafeStorageService {
+        val simpleXml = SimpleXmlConverterFactory.create() // createNonStrict();
+        val retrofit = Retrofit.Builder().baseUrl(SERVICE_URL)
+                .addConverterFactory(simpleXml)
+                .build()
+        return retrofit.create(SafeStorageService::class.java)
+    }
 }

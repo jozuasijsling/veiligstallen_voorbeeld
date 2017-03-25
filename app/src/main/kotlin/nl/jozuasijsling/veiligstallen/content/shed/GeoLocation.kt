@@ -14,15 +14,6 @@
  * limitations under the License.
  */
 
-package nl.jozuasijsling.veiligstallen.view.screen
+package nl.jozuasijsling.veiligstallen.content.shed
 
-import nl.jozuasijsling.veiligstallen.view.component.Map
-import nl.jozuasijsling.veiligstallen.view.component.SearchBar
-
-
-class MapScreen {
-
-    val map = Map()
-    val searchBar = SearchBar()
-
-}
+data class GeoLocation(val latitude: Double, val longitude: Double)

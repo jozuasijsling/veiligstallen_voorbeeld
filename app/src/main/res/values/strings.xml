@@ -22,17 +22,13 @@
   <eat-comment/>
   <string name="app_name"
       translatable="false">Showcase</string>
-  <string name="unit_kilometer"
-      translatable="false">km</string>
-  <string name="unit_meter"
-      translatable="false">m</string>
   <string name="check_mark"
       translatable="false">✓</string>
 
-  <string name="title_activity_station_maps"
-      translatable="false">NS Stations</string>
-  <string name="text_bike_shed_list_empty"
-      translatable="false">Geen stallingen gevonden.</string>
+  <string name="unit_kilometer">km</string>
+  <string name="unit_meter">m</string>
+  <string name="title_activity_station_maps">NS Stations</string>
+  <string name="text_bike_shed_list_empty">Geen stallingen gevonden.</string>
   <string name="title_activity_maps">Map</string>
 
 </resources>

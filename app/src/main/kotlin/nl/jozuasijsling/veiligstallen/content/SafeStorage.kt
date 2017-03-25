@@ -14,15 +14,10 @@
  * limitations under the License.
  */
 
-package nl.jozuasijsling.veiligstallen.view.screen
+package nl.jozuasijsling.veiligstallen.content
 
-import nl.jozuasijsling.veiligstallen.view.component.Map
-import nl.jozuasijsling.veiligstallen.view.component.SearchBar
+import org.joda.time.DateTime
 
 
-class MapScreen {
-
-    val map = Map()
-    val searchBar = SearchBar()
-
-}
+data class SafeStorage(val timestamp: DateTime,
+                       val bikeSheds: List<BikeShed>)

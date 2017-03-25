@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
-package nl.jozuasijsling.veiligstallen.view.screen
+package nl.jozuasijsling.veiligstallen.content.shed
 
-import nl.jozuasijsling.veiligstallen.view.component.Map
-import nl.jozuasijsling.veiligstallen.view.component.SearchBar
+import nl.jozuasijsling.veiligstallen.service.dto.BikeShedDto
 
+data class Address(val municipality: String,
+                   val street: String,
+                   val postcode: String,
+                   val city: String)
 
-class MapScreen {
-
-    val map = Map()
-    val searchBar = SearchBar()
-
+fun BikeShedDto.extractAddress(): Address {
+    return Address(municipality ?: "", street ?: "", postcode ?: "", city ?: "")
 }
