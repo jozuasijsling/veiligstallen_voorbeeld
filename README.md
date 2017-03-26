@@ -1,8 +1,8 @@
 veiligstallen_voorbeeld
 =======================
 
-Showcase project using VeiligStallen open source data
+Hobby project using VeiligStallen open source data
 
-This is still work-in-progress. The current version may not compile or run, it is only meant to show some of my preferred coding styles like the use of object graphs, dependency injection, messaging bus, Android's content provider, etc. Some of this code has been copied from pieces of previous work while others were custom made for this project.
+This is still work-in-progress. The primary goal of this project is to find a suitable method of decoupling Android's activity lifecycle from a proper MVVM architecture implementation. If this effort succeeds, it would produce a new method for Android app development that bypasses the complexity that every app developer faces from how Activity / Fragment lifecycle and configuration changes work.
 
-It's unlikely I'll find the time to finish this project, but the idea is rather simple. Load data from the veiligstallen dataset and display it using a mapsview, a listview, a detail view and for tablets a dual plane that combines detail and list view.
+This project simply takes data from VeiligStallen.nl and aims to show it in a map view with search and navigation capabilities. The available data offers a lot of potential for more features, which may get added in the future.
