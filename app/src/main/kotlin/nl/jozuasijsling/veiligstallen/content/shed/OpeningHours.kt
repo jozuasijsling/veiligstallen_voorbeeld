@@ -16,6 +16,8 @@
 
 package nl.jozuasijsling.veiligstallen.content.shed
 
+import nl.jozuasijsling.veiligstallen.service.dto.OpeningHoursDto
+
 data class OpeningHours(val mon: String,
                         val tue: String,
                         val wed: String,

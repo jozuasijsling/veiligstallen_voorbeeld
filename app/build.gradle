@@ -6,8 +6,8 @@ android {
   buildToolsVersion "25.0.2"
 
   defaultConfig {
-    applicationId "nl.binaryimpact.showcase"
-    minSdkVersion 21
+    applicationId 'nl.jozuasijsling.veiligstallen'
+    minSdkVersion 23
     targetSdkVersion 25
     versionCode 1
     versionName "0.0.1"
@@ -16,9 +16,13 @@ android {
     enabled true
   }
   buildTypes {
+    debug {
+      minifyEnabled true
+      proguardFiles 'proguard/rules.pro', 'proguard/debug.pro'
+    }
     release {
-      minifyEnabled false
-      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+      minifyEnabled true
+      proguardFiles 'proguard/rules.pro'
     }
   }
   sourceSets {
@@ -31,25 +35,9 @@ android {
 dependencies {
 
   // A few common dependencies that shouldn't need much explaining
-  compile fileTree(dir: 'libs', include: ['*.jar'])
+  compile fileTree( dir: 'libs', include: ['*.jar'] )
   compile 'com.android.support:support-annotations:25.3.0' // Android Support Annotations
   compile 'com.google.android.gms:play-services-maps:10.2.1'
-
-  /**
-   * Gson
-   *   Homepage: https://github.com/google/gson
-   *   Usage: JSON (de)serialization
-   *   Author: Google
-   *   License: Apache License 2.0*/
-  compile 'com.google.code.gson:gson:2.8.0'
-
-  /**
-   * Cupboard
-   *  Homepage: https://bitbucket.org/qbusict/cupboard
-   *  Usage: For simplifying access to the local database
-   *  Author: Hugo Visser
-   *  License: Apache License 2.0*/
-  compile 'nl.qbusict:cupboard:2.2.0'
 
   /**
    * Timber
@@ -58,6 +46,14 @@ dependencies {
    *  Author: Jake Wharton
    *  License: Apache License 2.0*/
   compile 'com.jakewharton.timber:timber:4.5.1'
+
+  /**
+   * RxJava
+   *  Homepage: https://github.com/ReactiveX/RxJava
+   *  Usage: Reactive control flow
+   *  Author: NetFlix Inc.
+   *  License: Apache License 2.0*/
+  compile 'io.reactivex.rxjava2:rxjava:2.0.7'
 
   /**
    * OkHttp
@@ -73,7 +69,7 @@ dependencies {
    *   Usage: For annotation-based XML parsing
    *   Author: Niall Gallagher
    *   License: Apache License 2.0*/
-  compile('org.simpleframework:simple-xml:2.7.1') {
+  compile( 'org.simpleframework:simple-xml:2.7.1' ) {
     exclude module: 'stax'
     exclude module: 'stax-api'
     exclude module: 'xpp3'
@@ -85,8 +81,9 @@ dependencies {
    *   Usage: For generating a REST api client
    *   Author: Square Inc.
    *   License: Apache License 2.0*/
-  compile 'com.squareup.retrofit2:retrofit:2.1.0'
-  compile('com.squareup.retrofit2:converter-simplexml:2.1.0') {
+  compile 'com.squareup.retrofit2:retrofit:2.2.0'
+  compile 'com.squareup.retrofit2:adapter-rxjava2:2.2.0'
+  compile( 'com.squareup.retrofit2:converter-simplexml:2.2.0' ) {
     exclude module: 'stax'
     exclude module: 'stax-api'
     exclude module: 'xpp3'
@@ -105,10 +102,8 @@ dependencies {
    *   Homepage: https://github.com/dlew/joda-time-android
    *   Usage: The best date time API available
    *   Author: Dan Lew
-   *   License: Apache License 2.0
-   */
+   *   License: Apache License 2.0*/
   compile 'net.danlew:android.joda:2.9.9'
-
 
   testCompile 'junit:junit:4.12'
   testCompile 'com.google.truth:truth:0.32'

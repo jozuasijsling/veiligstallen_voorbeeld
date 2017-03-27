@@ -16,6 +16,8 @@
 
 package nl.jozuasijsling.veiligstallen.content.shed
 
+import nl.jozuasijsling.veiligstallen.service.dto.SectionDto
+
 data class InnerSection(val id: String,
                         val name: String,
                         val capacity: Int,

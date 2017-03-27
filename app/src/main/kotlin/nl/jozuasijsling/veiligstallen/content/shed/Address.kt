@@ -22,7 +22,3 @@ data class Address(val municipality: String,
                    val street: String,
                    val postcode: String,
                    val city: String)
-
-fun BikeShedDto.extractAddress(): Address {
-    return Address(municipality ?: "", street ?: "", postcode ?: "", city ?: "")
-}

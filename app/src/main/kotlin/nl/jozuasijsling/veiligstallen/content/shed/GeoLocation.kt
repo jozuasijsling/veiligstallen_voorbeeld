@@ -16,4 +16,7 @@
 
 package nl.jozuasijsling.veiligstallen.content.shed
 
+import nl.jozuasijsling.veiligstallen.service.dto.BikeShedDto
+
 data class GeoLocation(val latitude: Double, val longitude: Double)
+

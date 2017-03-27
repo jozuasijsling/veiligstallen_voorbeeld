@@ -20,6 +20,7 @@ import nl.jozuasijsling.veiligstallen.service.dto.BikeShedDto
 import nl.jozuasijsling.veiligstallen.service.dto.OpeningHoursDto
 import nl.jozuasijsling.veiligstallen.service.dto.SectionDto
 import nl.jozuasijsling.veiligstallen.service.dto.response.SafeStorageDto
+import okhttp3.HttpUrl
 
 
 fun SafeStorageDto.validate(): Boolean {
@@ -35,12 +36,13 @@ fun BikeShedDto.validate(): Boolean {
             && street?.isNotEmpty() ?: true
             && postcode?.isNotEmpty() ?: true
             && city?.isNotEmpty() ?: true
-            && url?.isNotEmpty() ?: false
+            && url != null && HttpUrl.parse(url) != null
             && capacityTotal?.isNotEmpty() ?: false
             && (capacityTotal!! == "Onbekend" || (capacityTotal?.toIntOrNull() != null
             && bikeCapacity != null && capacityTotal!!.toInt() >= bikeCapacity!!))
             && sections?.all { it.validate() } ?: true
-            && referral != null && referral!!.isNotEmpty() && referral!!.size <= 2
+            && referral != null
+            && validateInlinedReferralPhrases()
             && referral!!.all(String::isNotEmpty)
             && openingHours?.validate() ?: false
             && isStationShed != null && isStationShed!! in listOf("Ja", "Nee")
@@ -50,6 +52,14 @@ fun BikeShedDto.validate(): Boolean {
             && access == null || access!!.trim() in listOf("Selfservice", "Deels selfservice")
             && administrator?.isNotEmpty() ?: true
             && administratorContact?.isNotEmpty() ?: true
+}
+
+private fun BikeShedDto.validateInlinedReferralPhrases(): Boolean {
+    return when (referral!!.size) {
+        1 -> true
+        2 -> HttpUrl.parse(referral!![1]) != null
+        else -> false
+    }
 }
 
 private fun SectionDto.validate(): Boolean {

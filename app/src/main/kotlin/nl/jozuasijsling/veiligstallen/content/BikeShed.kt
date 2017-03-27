@@ -20,23 +20,24 @@ import nl.jozuasijsling.veiligstallen.content.shed.Address
 import nl.jozuasijsling.veiligstallen.content.shed.GeoLocation
 import nl.jozuasijsling.veiligstallen.content.shed.InnerSection
 import nl.jozuasijsling.veiligstallen.content.shed.OpeningHours
+import nl.jozuasijsling.veiligstallen.service.dto.BikeShedDto
 import okhttp3.HttpUrl
 
 data class BikeShed(val name: String,
                     val description: String,
                     val id: String,
-                    val address: Address,
-                    val coordinates: GeoLocation,
+                    val address: Address?,
+                    val coordinates: GeoLocation?,
                     val url: HttpUrl,
                     val bikeCapacity: Int,
-                    val totalCapacity: Int,
+                    val totalCapacity: String,
                     val referralCode: Int,
-                    val referralUrl: HttpUrl,
+                    val referralUrl: HttpUrl?,
                     val sections: List<InnerSection>,
                     val openingHours: OpeningHours,
                     val isStationShed: Boolean,
                     val facilities: List<String>,
-                    val type: String,
-                    val access: String,
-                    val administrator: String,
-                    val administratorContact: String)
+                    val type: String?,
+                    val access: String?,
+                    val administrator: String?,
+                    val administratorContact: String?)
