@@ -14,4 +14,19 @@
  * limitations under the License.
  */
 
-include ':app'
+package nl.jozuasijsling.veiligstallen.view.window
+
+import android.app.Activity
+import android.databinding.DataBindingUtil
+import nl.jozuasijsling.veiligstallen.R
+import nl.jozuasijsling.veiligstallen.databinding.MapScreenBinding
+import nl.jozuasijsling.veiligstallen.view.screen.MapScreen
+
+class MapScreenBinder(val viewModel: MapScreen) : WindowModelBinder {
+
+    override fun bind(activity: Activity) {
+        val binding = DataBindingUtil.setContentView<MapScreenBinding?>(activity, R.layout.map_screen)!!
+        binding.map = viewModel.map
+        binding.searchBar = viewModel.searchBar
+    }
+}

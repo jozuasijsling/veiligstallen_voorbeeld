@@ -14,4 +14,27 @@
  * limitations under the License.
  */
 
-include ':app'
+package nl.jozuasijsling.veiligstallen.view.adapters
+
+import android.os.Bundle
+
+
+interface LifecycleCallbacks {
+
+    fun onCreated(bundle: Bundle?)
+
+    fun onStarted()
+
+    fun onResumed()
+
+    fun onPaused()
+
+    fun onStopped()
+
+    fun onSaveInstanceState(bundle: Bundle?)
+
+    fun onDestroyed()
+
+    fun onLowMemory()
+
+}

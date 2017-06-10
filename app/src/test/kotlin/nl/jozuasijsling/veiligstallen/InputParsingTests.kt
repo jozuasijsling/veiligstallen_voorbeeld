@@ -17,20 +17,21 @@
 package nl.jozuasijsling.veiligstallen
 
 import com.google.common.truth.Truth.assertThat
+import nl.jozuasijsling.veiligstallen.data.toDomainObject
 import nl.jozuasijsling.veiligstallen.service.dto.SafeStorageDto
-import nl.jozuasijsling.veiligstallen.service.validation.validate
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
+import org.junit.runners.Parameterized.Parameters
 import org.simpleframework.xml.core.Persister
-import java.util.Arrays
+import java.util.*
 
 @RunWith(value = Parameterized::class)
-class InputValidationTests(date: String) {
+class InputParsingTests(date: String) {
 
     companion object {
         @JvmStatic
-        @Parameterized.Parameters(name = "File dated {0} passes validation")
+        @Parameters(name = "File dated {0} passes validation")
         fun data(): Iterable<Array<String>> {
             return Arrays.asList(arrayOf("2017-03-25"), arrayOf("2017-06-08"))
         }
@@ -45,10 +46,11 @@ class InputValidationTests(date: String) {
                 .getResourceAsStream("veiligstallen_$suffix.xml")
                 .bufferedReader()
                 .use { it.readText() }
-
         val dto = serializer.read(SafeStorageDto::class.java, xml)
 
-        assertThat(dto.validate()).isTrue()
+        val parsedObject = dto.toDomainObject()
+
+        assertThat(parsedObject).isNotNull()
     }
 
 }

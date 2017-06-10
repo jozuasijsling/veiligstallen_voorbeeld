@@ -14,4 +14,19 @@
  * limitations under the License.
  */
 
-include ':app'
+package nl.jozuasijsling.veiligstallen.service.validation
+
+// FullScan finds all errors in the input and builds a comprehensive error report.
+
+
+// TODO
+
+
+fun <T> requireNonNull(obj: T?, reportBuilder: StringBuilder): Boolean {
+    if (obj == null) {
+        reportBuilder.append("Object was null.")
+        return false
+    } else {
+        return true
+    }
+}

@@ -14,4 +14,20 @@
  * limitations under the License.
  */
 
-include ':app'
+package nl.jozuasijsling.veiligstallen
+
+import nl.jozuasijsling.veiligstallen.service.dto.SafeStorageDto
+import org.junit.Test
+import org.simpleframework.xml.core.PersistenceException
+import org.simpleframework.xml.core.Persister
+
+class EmptyRootTest {
+
+    @Test(expected = PersistenceException::class)
+    fun emptyFileFailsValidation() {
+        val xml = """<?xml version="1.0" encoding="UTF-8"?><Fietsenstallingen/>"""
+        val serializer = Persister()
+
+        serializer.read(SafeStorageDto::class.java, xml)
+    }
+}

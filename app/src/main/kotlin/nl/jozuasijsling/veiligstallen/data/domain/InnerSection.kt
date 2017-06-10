@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package nl.jozuasijsling.veiligstallen.content
+package nl.jozuasijsling.veiligstallen.data.domain
 
-import org.joda.time.DateTime
-
-
-data class SafeStorage(val timestamp: DateTime,
-                       val bikeSheds: List<BikeShed>)
+data class InnerSection(val id: String,
+                        val name: String,
+                        val capacity: Int,
+                        val unoccupied: Int,
+                        val occupied: Int)

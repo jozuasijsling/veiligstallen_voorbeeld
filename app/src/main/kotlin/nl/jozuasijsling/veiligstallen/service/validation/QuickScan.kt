@@ -19,7 +19,7 @@ package nl.jozuasijsling.veiligstallen.service.validation
 import nl.jozuasijsling.veiligstallen.service.dto.BikeShedDto
 import nl.jozuasijsling.veiligstallen.service.dto.OpeningHoursDto
 import nl.jozuasijsling.veiligstallen.service.dto.SectionDto
-import nl.jozuasijsling.veiligstallen.service.dto.response.SafeStorageDto
+import nl.jozuasijsling.veiligstallen.service.dto.SafeStorageDto
 import okhttp3.HttpUrl
 
 

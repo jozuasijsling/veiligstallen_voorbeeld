@@ -14,4 +14,23 @@
  * limitations under the License.
  */
 
-include ':app'
+package nl.jozuasijsling.veiligstallen.view.window
+
+import android.app.Activity
+import nl.jozuasijsling.veiligstallen.view.screen.MapScreen
+import java.util.ArrayDeque
+
+object WindowModelStack {
+
+    private val binderStack = ArrayDeque<WindowModelBinder>()
+
+    fun bind(activity: Activity) {
+
+        if (binderStack.isEmpty()) {
+            binderStack.push(MapScreenBinder(MapScreen()))
+        }
+
+        binderStack.peek().bind(activity)
+    }
+
+}

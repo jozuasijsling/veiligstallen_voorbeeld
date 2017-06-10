@@ -14,4 +14,9 @@
  * limitations under the License.
  */
 
-include ':app'
+package nl.jozuasijsling.veiligstallen.data.domain
+
+data class Address(val municipality: String,
+                   val street: String,
+                   val postcode: String,
+                   val city: String)

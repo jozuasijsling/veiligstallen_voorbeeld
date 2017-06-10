@@ -14,4 +14,12 @@
  * limitations under the License.
  */
 
-include ':app'
+package nl.jozuasijsling.veiligstallen.view.window
+
+import android.app.Activity
+
+interface WindowModelBinder {
+
+    fun bind(activity: Activity)
+
+}

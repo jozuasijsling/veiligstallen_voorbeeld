@@ -14,11 +14,22 @@
  * limitations under the License.
  */
 
-package nl.jozuasijsling.veiligstallen.content.shed
+package nl.jozuasijsling.veiligstallen.view.component
 
-import nl.jozuasijsling.veiligstallen.service.dto.BikeShedDto
+import com.google.android.gms.maps.model.LatLng
+import com.google.maps.android.clustering.ClusterItem
+import nl.jozuasijsling.veiligstallen.data.domain.BikeShed
+import nl.jozuasijsling.veiligstallen.view.extensions.asLatLng
 
-data class Address(val municipality: String,
-                   val street: String,
-                   val postcode: String,
-                   val city: String)
+
+class BikeShedMarker(private val shed: BikeShed) : ClusterItem {
+
+    override fun getSnippet(): String
+            = shed.description
+
+    override fun getTitle(): String
+            = shed.name
+
+    override fun getPosition(): LatLng
+            = shed.coordinates!!.asLatLng()
+}

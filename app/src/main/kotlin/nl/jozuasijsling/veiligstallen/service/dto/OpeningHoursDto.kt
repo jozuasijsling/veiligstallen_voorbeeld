@@ -16,8 +16,10 @@
 
 package nl.jozuasijsling.veiligstallen.service.dto
 
+import android.support.annotation.Keep
 import org.simpleframework.xml.Element
 
+@Keep
 class OpeningHoursDto {
 
     var monday: Day? = null
@@ -42,6 +44,7 @@ class OpeningHoursDto {
         @Element(name = "Zo") set
         @Element(name = "Zo") get
 
+    @Keep
     class Day {
         var open: String? = null
             @Element(name = "Open", required = false) set
@@ -51,6 +54,6 @@ class OpeningHoursDto {
             @Element(name = "Dicht", required = false) get
         var remark: String? = null
             @Element(name = "Opmerking", required = false) set
-            @Element(name = "Opmerking", required = false)  get
+            @Element(name = "Opmerking", required = false) get
     }
 }

@@ -14,9 +14,10 @@
  * limitations under the License.
  */
 
-package nl.jozuasijsling.veiligstallen.content.shed
+package nl.jozuasijsling.veiligstallen.data.domain
 
-import nl.jozuasijsling.veiligstallen.service.dto.BikeShedDto
+import org.joda.time.DateTime
 
-data class GeoLocation(val latitude: Double, val longitude: Double)
 
+data class SafeStorage(val timestamp: DateTime,
+                       val bikeSheds: List<BikeShed>)

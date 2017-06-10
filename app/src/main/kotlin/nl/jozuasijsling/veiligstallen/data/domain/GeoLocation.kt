@@ -14,14 +14,7 @@
  * limitations under the License.
  */
 
-package nl.jozuasijsling.veiligstallen.content.shed
+package nl.jozuasijsling.veiligstallen.data.domain
 
-import nl.jozuasijsling.veiligstallen.service.dto.OpeningHoursDto
+data class GeoLocation(val latitude: Double, val longitude: Double)
 
-data class OpeningHours(val mon: String,
-                        val tue: String,
-                        val wed: String,
-                        val thu: String,
-                        val fri: String,
-                        val sat: String,
-                        val sun: String)

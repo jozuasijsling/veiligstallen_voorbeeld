@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 Jozua Sijsling
+ * Copyright (c) 2017 Jozua Sijsling
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,13 +14,14 @@
  * limitations under the License.
  */
 
-package nl.jozuasijsling.veiligstallen.service.dto.response
+package nl.jozuasijsling.veiligstallen.service.dto
 
-import nl.jozuasijsling.veiligstallen.service.dto.BikeShedDto
+import android.support.annotation.Keep
 import org.simpleframework.xml.Element
 import org.simpleframework.xml.ElementList
 import org.simpleframework.xml.Root
 
+@Keep
 @Root(name = "FietsenStallingen")
 class SafeStorageDto {
 

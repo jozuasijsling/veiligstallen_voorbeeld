@@ -16,6 +16,8 @@
 
 package nl.jozuasijsling.veiligstallen.service
 
+import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
+import nl.jozuasijsling.veiligstallen.service.SafeStorageService.Companion.SERVICE_URL
 import retrofit2.Retrofit
 import retrofit2.converter.simplexml.SimpleXmlConverterFactory
 
@@ -27,6 +29,7 @@ class ServiceModule {
     fun provideDataService(): SafeStorageService {
         val simpleXml = SimpleXmlConverterFactory.create() // createNonStrict();
         val retrofit = Retrofit.Builder().baseUrl(SERVICE_URL)
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(simpleXml)
                 .build()
         return retrofit.create(SafeStorageService::class.java)

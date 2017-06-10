@@ -17,14 +17,51 @@
 package nl.jozuasijsling.veiligstallen.view.component
 
 import android.databinding.ObservableField
-import android.databinding.ObservableInt
+import android.databinding.ObservableFloat
+import com.google.android.gms.maps.CameraUpdate
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
+import com.google.android.gms.maps.model.MarkerOptions
+import nl.jozuasijsling.veiligstallen.data.SafeStorageRepository
+import nl.jozuasijsling.veiligstallen.data.domain.BikeShed
+import nl.jozuasijsling.veiligstallen.data.domain.GeoLocation
+import nl.jozuasijsling.veiligstallen.view.adapters.asRxObservable
+import nl.jozuasijsling.veiligstallen.view.extensions.asLatLng
 
 
 class Map {
 
-    val cameraLocation = ObservableField<GeoPosition>()
-    val cameraZoomLevel = ObservableInt()
+    val cameraLocation = ObservableField<GeoLocation>(GeoLocation(52.3702, 4.8952))
+    val cameraZoomLevel = ObservableFloat()
 
-    data class GeoPosition(val longitude: Double, val latitude: Double)
+    private lateinit var googleMap: GoogleMap
 
+    fun onGoogleMapReady(map: GoogleMap) {
+
+        googleMap = map
+
+        cameraZoomLevel.set(map.cameraPosition.zoom)
+        map.moveCamera(cameraLocation.get().toCameraUpdate())
+
+        cameraLocation.asRxObservable().forEach {
+            map.animateCamera(it.get().toCameraUpdate())
+        }
+
+        SafeStorageRepository.getStorage()
+                .flatMapIterable { it.bikeSheds }
+                .filter { it.coordinates != null }
+                .forEach { googleMap.addMarker(MarkerOptions().asBikeShedMarker(it)) }
+    }
+
+    private fun MarkerOptions.asBikeShedMarker(shed: BikeShed): MarkerOptions {
+        return position(shed.coordinates!!.asLatLng())
+                .title(shed.name)
+                .snippet(shed.description)
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
+    }
+
+    private fun GeoLocation.toCameraUpdate(): CameraUpdate {
+        return CameraUpdateFactory.newLatLng(asLatLng())
+    }
 }

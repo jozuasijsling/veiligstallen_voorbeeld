@@ -14,12 +14,15 @@
  * limitations under the License.
  */
 
-package nl.jozuasijsling.veiligstallen.content.shed
+package nl.jozuasijsling.veiligstallen
 
-import nl.jozuasijsling.veiligstallen.service.dto.SectionDto
+import android.app.Application
+import net.danlew.android.joda.JodaTimeAndroid
 
-data class InnerSection(val id: String,
-                        val name: String,
-                        val capacity: Int,
-                        val unoccupied: Int,
-                        val occupied: Int)
+class SafeStorageApplication : Application() {
+
+    override fun onCreate() {
+        super.onCreate()
+        JodaTimeAndroid.init(this);
+    }
+}

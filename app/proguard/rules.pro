@@ -65,3 +65,37 @@
 -keepclasseswithmembers class * {
     @android.support.annotation.Keep <init>(...);
 }
+
+# SimpleXML uses the XML stream package from javax, which is not available on Android.
+-dontwarn javax.xml.stream.**
+
+# Several libraries use annotations from javax, which is not available on Android
+-dontwarn javax.annotation.**
+
+# Missing non-runtime annotation can be ignored
+-dontwarn org.codehaus.mojo.animal_sniffer.IgnoreJRERequirement
+
+
+-keep class com.google.android.gms.maps.MapFragment
+
+
+# SimpleXml uses reflection, these classes must remain on the classpath
+
+-keep interface org.simpleframework.xml.core.Label {
+   public *;
+}
+-keep class * implements org.simpleframework.xml.core.Label {
+   public *;
+}
+-keep interface org.simpleframework.xml.core.Parameter {
+   public *;
+}
+-keep class * implements org.simpleframework.xml.core.Parameter {
+   public *;
+}
+-keep interface org.simpleframework.xml.core.Extractor {
+   public *;
+}
+-keep class * implements org.simpleframework.xml.core.Extractor {
+   public *;
+}

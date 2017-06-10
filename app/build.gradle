@@ -1,111 +1,149 @@
+/*
+ * Copyright (c) 2017 Jozua Sijsling
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+//apply plugin: 'kotlin-kapt'
 
 android {
-  compileSdkVersion 25
-  buildToolsVersion "25.0.2"
+    compileSdkVersion 26
+    buildToolsVersion "26.0.0"
 
-  defaultConfig {
-    applicationId 'nl.jozuasijsling.veiligstallen'
-    minSdkVersion 23
-    targetSdkVersion 25
-    versionCode 1
-    versionName "0.0.1"
-  }
-  dataBinding {
-    enabled true
-  }
-  buildTypes {
-    debug {
-      minifyEnabled true
-      proguardFiles 'proguard/rules.pro', 'proguard/debug.pro'
+    defaultConfig {
+        applicationId 'nl.jozuasijsling.veiligstallen'
+        minSdkVersion 23
+        targetSdkVersion 26
+        versionCode 1
+        versionName "0.0.1"
+
+        // Handle orientation ourselves to improve user experience
+        manifestPlaceholders = [configChanges: 'screenSize|orientation']
     }
-    release {
-      minifyEnabled true
-      proguardFiles 'proguard/rules.pro'
+    dataBinding {
+        enabled true
     }
-  }
-  sourceSets {
-    main.java.srcDirs += 'src/main/kotlin'
-    test.java.srcDirs += 'src/test/kotlin'
-    androidTest.java.srcDirs += 'src/androidTest/kotlin'
-  }
+    buildTypes {
+        debug {
+            minifyEnabled true
+            proguardFiles 'proguard/rules.pro', 'proguard/debug.pro'
+            manifestPlaceholders = [configChanges: '']
+        }
+        release {
+            minifyEnabled true
+            proguardFiles 'proguard/rules.pro'
+        }
+    }
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+        test.java.srcDirs += 'src/test/kotlin'
+        androidTest.java.srcDirs += 'src/androidTest/kotlin'
+    }
+    packagingOptions {
+        exclude 'META-INF/rxjava.properties'
+    }
+    kapt {
+        generateStubs = true
+    }
 }
 
 dependencies {
 
-  // A few common dependencies that shouldn't need much explaining
-  compile fileTree( dir: 'libs', include: ['*.jar'] )
-  compile 'com.android.support:support-annotations:25.3.0' // Android Support Annotations
-  compile 'com.google.android.gms:play-services-maps:10.2.1'
+    // A few common dependencies that shouldn't need much explaining
+    compile fileTree(dir: 'libs', include: ['*.jar'])
 
-  /**
-   * Timber
-   *  Homepage: https://github.com/JakeWharton/timber
-   *  Usage: For dynamic logging configs
-   *  Author: Jake Wharton
-   *  License: Apache License 2.0*/
-  compile 'com.jakewharton.timber:timber:4.5.1'
+    // Android Support Annotations
+    compile "com.android.support:support-annotations:$support_version"
 
-  /**
-   * RxJava
-   *  Homepage: https://github.com/ReactiveX/RxJava
-   *  Usage: Reactive control flow
-   *  Author: NetFlix Inc.
-   *  License: Apache License 2.0*/
-  compile 'io.reactivex.rxjava2:rxjava:2.0.7'
+    // Google Maps
+    compile 'com.google.android.gms:play-services-maps:11.0.0'
+    compile 'com.google.maps.android:android-maps-utils:0.5'
 
-  /**
-   * OkHttp
-   *   Homepage: http://square.github.io/okhttp/
-   *   Usage: For HTTP I/O that is optimized for mobile devices
-   *   Author: Square Inc.
-   *   License: Apache License 2.0*/
-  compile 'com.squareup.okhttp3:okhttp:3.6.0'
+    // Data binding (let Kotlin process generated code)
+    kapt "com.android.databinding:compiler:$android_plugin_version"
 
-  /**
-   * Simple-XML
-   *   Homepage: http://simple.sourceforge.net/
-   *   Usage: For annotation-based XML parsing
-   *   Author: Niall Gallagher
-   *   License: Apache License 2.0*/
-  compile( 'org.simpleframework:simple-xml:2.7.1' ) {
-    exclude module: 'stax'
-    exclude module: 'stax-api'
-    exclude module: 'xpp3'
-  }
+    /**
+     * Timber
+     *  Homepage: https://github.com/JakeWharton/timber
+     *  Usage: For dynamic logging configs
+     *  Author: Jake Wharton
+     *  License: Apache License 2.0*/
+    compile 'com.jakewharton.timber:timber:4.5.1'
 
-  /**
-   * Retrofit
-   *   Homepage: http://square.github.io/retrofit/
-   *   Usage: For generating a REST api client
-   *   Author: Square Inc.
-   *   License: Apache License 2.0*/
-  compile 'com.squareup.retrofit2:retrofit:2.2.0'
-  compile 'com.squareup.retrofit2:adapter-rxjava2:2.2.0'
-  compile( 'com.squareup.retrofit2:converter-simplexml:2.2.0' ) {
-    exclude module: 'stax'
-    exclude module: 'stax-api'
-    exclude module: 'xpp3'
-  }
+    /**
+     * RxJava
+     *  Homepage: https://github.com/ReactiveX/RxJava
+     *  Usage: Reactive control flow
+     *  Author: Netflix, Inc.
+     *  License: Apache License 2.0*/
+    compile 'io.reactivex.rxjava2:rxjava:2.1.0'
+    compile 'io.reactivex.rxjava2:rxkotlin:2.0.3'
+    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
 
-  /**
-   * Kotlin
-   *   Homepage: https://kotlinlang.org/
-   *   Usage: The better programming language
-   *   Author: Jetbrains
-   *   License: Apache License 2.0*/
-  compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    /**
+     * OkHttp
+     *   Homepage: http://square.github.io/okhttp/
+     *   Usage: For HTTP I/O that is optimized for mobile devices
+     *   Author: Square, Inc.
+     *   License: Apache License 2.0*/
+    compile 'com.squareup.okhttp3:okhttp:3.8.0'
 
-  /**
-   * Joda-Time Android
-   *   Homepage: https://github.com/dlew/joda-time-android
-   *   Usage: The best date time API available
-   *   Author: Dan Lew
-   *   License: Apache License 2.0*/
-  compile 'net.danlew:android.joda:2.9.9'
+    /**
+     * Simple-XML
+     *   Homepage: http://simple.sourceforge.net/
+     *   Usage: For annotation-based XML parsing
+     *   Author: Niall Gallagher
+     *   License: Apache License 2.0*/
+    compile('org.simpleframework:simple-xml:2.7.1') {
+        exclude module: 'stax'
+        exclude module: 'stax-api'
+        exclude module: 'xpp3'
+    }
 
-  testCompile 'junit:junit:4.12'
-  testCompile 'com.google.truth:truth:0.32'
-  testCompile 'org.mockito:mockito-android:2.7.19'
+    /**
+     * Retrofit
+     *   Homepage: http://square.github.io/retrofit/
+     *   Usage: For generating a REST api client
+     *   Author: Square, Inc.
+     *   License: Apache License 2.0*/
+    compile 'com.squareup.retrofit2:retrofit:2.3.0'
+    compile 'com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0'
+    compile('com.squareup.retrofit2:converter-simplexml:2.3.0') {
+        exclude module: 'stax'
+        exclude module: 'stax-api'
+        exclude module: 'xpp3'
+    }
+
+    /**
+     * Kotlin
+     *   Homepage: https://kotlinlang.org/
+     *   Usage: The better programming language
+     *   Author: Jetbrains, Inc.
+     *   License: Apache License 2.0*/
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
+    /**
+     * Joda-Time Android
+     *   Homepage: https://github.com/dlew/joda-time-android
+     *   Usage: The best date time API available
+     *   Author: Dan Lew
+     *   License: Apache License 2.0*/
+    compile "net.danlew:android.joda:${joda_time_version}"
+
+    testCompile 'junit:junit:4.12'
+    testCompile 'com.google.truth:truth:0.33'
+    testCompile 'org.mockito:mockito-android:2.8.9'
+    testCompile "joda-time:joda-time:${joda_time_version}"
 }

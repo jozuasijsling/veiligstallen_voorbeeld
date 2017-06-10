@@ -14,13 +14,8 @@
  * limitations under the License.
  */
 
-package nl.jozuasijsling.veiligstallen.content
+package nl.jozuasijsling.veiligstallen.data.domain
 
-import nl.jozuasijsling.veiligstallen.content.shed.Address
-import nl.jozuasijsling.veiligstallen.content.shed.GeoLocation
-import nl.jozuasijsling.veiligstallen.content.shed.InnerSection
-import nl.jozuasijsling.veiligstallen.content.shed.OpeningHours
-import nl.jozuasijsling.veiligstallen.service.dto.BikeShedDto
 import okhttp3.HttpUrl
 
 data class BikeShed(val name: String,

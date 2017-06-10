@@ -14,4 +14,10 @@
  * limitations under the License.
  */
 
-include ':app'
+package nl.jozuasijsling.veiligstallen.view.extensions
+
+import com.google.android.gms.maps.model.LatLng
+import nl.jozuasijsling.veiligstallen.data.domain.GeoLocation
+
+
+fun GeoLocation.asLatLng(): LatLng = LatLng(latitude, longitude)

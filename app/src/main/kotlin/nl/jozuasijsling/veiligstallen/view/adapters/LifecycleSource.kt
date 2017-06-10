@@ -14,4 +14,11 @@
  * limitations under the License.
  */
 
-include ':app'
+package nl.jozuasijsling.veiligstallen.view.adapters
+
+
+interface LifecycleSource {
+
+    var listener: LifecycleCallbacks? get set
+
+}

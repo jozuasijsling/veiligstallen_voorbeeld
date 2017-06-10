@@ -16,12 +16,15 @@
 
 package nl.jozuasijsling.veiligstallen.service
 
-import nl.jozuasijsling.veiligstallen.service.dto.response.SafeStorageDto
+import io.reactivex.Observable
+import nl.jozuasijsling.veiligstallen.service.dto.SafeStorageDto
 import retrofit2.http.GET
-
-const val SERVICE_URL = "http://www.veiligstallen.nl/"
 
 interface SafeStorageService {
 
-    @get:GET("veiligstallen.xml") val safeStorage: SafeStorageDto
+    @get:GET("veiligstallen.xml") val safeStorage: Observable<SafeStorageDto>
+
+    companion object {
+        const val SERVICE_URL = "http://www.veiligstallen.nl/"
+    }
 }
