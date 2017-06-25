@@ -17,6 +17,8 @@
 package nl.jozuasijsling.veiligstallen
 
 import com.google.common.truth.Truth.assertThat
+import nl.jozuasijsling.veiligstallen.data.domain.BikeShedType
+import nl.jozuasijsling.veiligstallen.data.domain.localiseBikeShedType
 import nl.jozuasijsling.veiligstallen.data.toDomainObject
 import nl.jozuasijsling.veiligstallen.service.dto.SafeStorageDto
 import org.junit.Test
@@ -27,11 +29,11 @@ import org.simpleframework.xml.core.Persister
 import java.util.*
 
 @RunWith(value = Parameterized::class)
-class InputParsingTests(date: String) {
+class TypeLocalisingTests(date: String) {
 
     companion object {
         @JvmStatic
-        @Parameters(name = "File dated {0} passes validation")
+        @Parameters(name = "File dated {0} has no unexpected unknowns")
         fun data(): Iterable<Array<String>> {
             return Arrays.asList(arrayOf("2017-03-25"), arrayOf("2017-06-08"))
         }
@@ -40,17 +42,22 @@ class InputParsingTests(date: String) {
     private val suffix = date.replace("-", "")
 
     @Test
-    fun testFileParsesCorrectly() {
+    fun testFileHasNoBikeShedsWithUnknownType() {
         val serializer = Persister()
-        val xml = InputParsingTests::class.java
+        val xml = TypeLocalisingTests::class.java
                 .getResourceAsStream("veiligstallen_$suffix.xml")
                 .bufferedReader()
                 .use { it.readText() }
         val dto = serializer.read(SafeStorageDto::class.java, xml)
-
         val parsedObject = dto.toDomainObject()
 
-        assertThat(parsedObject).isNotNull()
+
+        val unknownTypes = parsedObject.bikeSheds
+                .map { Pair(it.type, localiseBikeShedType(it.type)) }
+                .filter { it.second == BikeShedType.UNKNOWN }
+                .filter { it.first != null }
+
+        assertThat(unknownTypes).isEmpty()
     }
 
 }

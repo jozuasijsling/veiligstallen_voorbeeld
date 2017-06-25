@@ -52,7 +52,7 @@ fun BikeShedDto.toDomainObject(): BikeShed {
             openingHours!!.toDomainObject(),
             isStationShed == "Ja",
             facilities?.split(",") ?: emptyList(),
-            type,
+            localiseBikeShedType(type),
             access,
             administrator,
             administratorContact)
