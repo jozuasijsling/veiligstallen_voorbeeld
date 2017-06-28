@@ -16,18 +16,16 @@
 
 package nl.jozuasijsling.veiligstallen.data.domain
 
-import okhttp3.HttpUrl
-
 data class BikeShed(val name: String,
                     val description: String,
                     val id: String,
                     val address: Address?,
                     val coordinates: GeoLocation?,
-                    val url: HttpUrl,
+                    val url: String,
                     val bikeCapacity: Int,
                     val totalCapacity: String,
                     val referralCode: Int,
-                    val referralUrl: HttpUrl?,
+                    val referralUrl: String?,
                     val sections: List<InnerSection>,
                     val openingHours: OpeningHours,
                     val isStationShed: Boolean,

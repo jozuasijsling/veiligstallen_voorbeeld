@@ -19,7 +19,6 @@ package nl.jozuasijsling.veiligstallen
 import com.google.common.truth.Truth.assertThat
 import nl.jozuasijsling.veiligstallen.data.domain.BikeShedType
 import nl.jozuasijsling.veiligstallen.data.domain.localiseBikeShedType
-import nl.jozuasijsling.veiligstallen.data.toDomainObject
 import nl.jozuasijsling.veiligstallen.service.dto.SafeStorageDto
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -49,13 +48,11 @@ class TypeLocalisingTests(date: String) {
                 .bufferedReader()
                 .use { it.readText() }
         val dto = serializer.read(SafeStorageDto::class.java, xml)
-        val parsedObject = dto.toDomainObject()
 
-
-        val unknownTypes = parsedObject.bikeSheds
-                .map { Pair(it.type, localiseBikeShedType(it.type)) }
-                .filter { it.second == BikeShedType.UNKNOWN }
-                .filter { it.first != null }
+        val unknownTypes = dto.bikeSheds
+                ?.map { it.type to localiseBikeShedType(it.type) }
+                ?.filter { it.second == BikeShedType.UNKNOWN }
+                ?.filter { it.first != null }
 
         assertThat(unknownTypes).isEmpty()
     }

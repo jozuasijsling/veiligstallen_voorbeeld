@@ -16,12 +16,10 @@
 
 package nl.jozuasijsling.veiligstallen.service.dto
 
-import android.support.annotation.Keep
 import org.simpleframework.xml.Element
 import org.simpleframework.xml.ElementList
 import org.simpleframework.xml.Root
 
-@Keep
 @Root(name = "Fietsenstalling")
 class BikeShedDto {
 

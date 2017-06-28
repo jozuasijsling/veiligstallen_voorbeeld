@@ -14,20 +14,19 @@
  * limitations under the License.
  */
 
-package nl.jozuasijsling.veiligstallen
+package nl.jozuasijsling.veiligstallen.service.dto
 
-import nl.jozuasijsling.veiligstallen.service.dto.SafeStorageDto
-import org.junit.Test
-import org.simpleframework.xml.core.PersistenceException
-import org.simpleframework.xml.core.Persister
+import org.simpleframework.xml.Element
+import org.simpleframework.xml.ElementList
+import org.simpleframework.xml.Root
 
-class EmptyRootTest {
+@Root(name = "FietsenStallingen")
+class SafeStorageDto {
 
-    @Test(expected = PersistenceException::class)
-    fun emptyFileFailsValidation() {
-        val xml = """<?xml version="1.0" encoding="UTF-8"?><Fietsenstallingen/>"""
-        val serializer = Persister()
-
-        serializer.read(SafeStorageDto::class.java, xml)
-    }
+    var dateTime: String? = null
+        @Element(name = "DateTime") set
+        @Element(name = "DateTime") get
+    var bikeSheds: List<BikeShedDto>? = null
+        @ElementList(name = "FietsenStalling", inline = true, type = BikeShedDto::class) set
+        @ElementList(name = "FietsenStalling", inline = true, type = BikeShedDto::class) get
 }

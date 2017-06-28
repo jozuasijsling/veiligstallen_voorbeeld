@@ -14,27 +14,20 @@
  * limitations under the License.
  */
 
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
+package nl.jozuasijsling.veiligstallen.service
 
-buildscript {
-    ext.kotlin_version = '1.1.3'
+import nl.jozuasijsling.veiligstallen.service.dto.SafeStorageDto
+import org.junit.Test
+import org.simpleframework.xml.core.PersistenceException
+import org.simpleframework.xml.core.Persister
 
-    ext.android_plugin_version = '3.0.0-alpha4'
-    ext.support_version = '25.3.1'
-    ext.joda_time_version = '2.9.9'
+class UnexpectedInputTests {
 
-    repositories {
-        mavenCentral()
-        jcenter()
-    }
-    dependencies {
-        classpath "com.android.tools.build:gradle:$android_plugin_version"
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-    }
-}
+    @Test(expected = PersistenceException::class)
+    fun emptyFileFailsValidation() {
 
-allprojects {
-    repositories {
-        jcenter()
+        ClassLoader.getSystemResourceAsStream("resources/empty.xml").use {
+            Persister().read(SafeStorageDto::class.java, it)
+        }
     }
 }

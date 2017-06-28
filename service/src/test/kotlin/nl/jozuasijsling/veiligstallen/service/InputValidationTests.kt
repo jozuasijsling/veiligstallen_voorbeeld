@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package nl.jozuasijsling.veiligstallen
+package nl.jozuasijsling.veiligstallen.service
 
 import com.google.common.truth.Truth.assertThat
 import nl.jozuasijsling.veiligstallen.service.dto.SafeStorageDto
@@ -23,7 +23,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
 import org.simpleframework.xml.core.Persister
-import java.util.Arrays
+import java.util.*
 
 @RunWith(value = Parameterized::class)
 class InputValidationTests(date: String) {
@@ -37,17 +37,14 @@ class InputValidationTests(date: String) {
     }
 
     private val suffix = date.replace("-", "")
+    private val filename = "resources/veiligstallen_$suffix.xml"
 
     @Test
     fun testFilePassesValidation() {
-        val serializer = Persister()
-        val xml = InputValidationTests::class.java
-                .getResourceAsStream("veiligstallen_$suffix.xml")
-                .bufferedReader()
-                .use { it.readText() }
 
-        val dto = serializer.read(SafeStorageDto::class.java, xml)
-
+        val dto = ClassLoader.getSystemResourceAsStream(filename).use {
+            Persister().read(SafeStorageDto::class.java, it)
+        }
         assertThat(dto.validate()).isTrue()
     }
 

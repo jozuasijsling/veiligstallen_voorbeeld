@@ -1,0 +1,84 @@
+apply plugin: 'java-library'
+apply plugin: 'kotlin'
+
+sourceSets {
+    main.java.srcDirs += 'src/main/kotlin'
+    test.java.srcDirs += 'src/test/kotlin'
+    test.resources.srcDirs += 'src/test/resources'
+}
+
+sourceCompatibility = "1.7"
+targetCompatibility = "1.7"
+
+task copyTestResources(type: Copy) {
+    from "${projectDir}/src/test/resources"
+    into "${buildDir}/classes/java/test/resources"
+}
+processTestResources.dependsOn copyTestResources
+
+dependencies {
+
+    /**
+     * Kotlin
+     *   Homepage: https://kotlinlang.org/
+     *   Usage: The better programming language
+     *   Author: Jetbrains, Inc.
+     *   License: Apache License 2.0*/
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
+    /**
+     * RxJava
+     *  Homepage: https://github.com/ReactiveX/RxJava
+     *  Usage: Reactive control flow
+     *  Author: Netflix, Inc.
+     *  License: Apache License 2.0*/
+    api 'io.reactivex.rxjava2:rxjava:2.1.0'
+    api 'io.reactivex.rxjava2:rxkotlin:2.0.3'
+
+    /**
+     * Joda-Time Android
+     *   Homepage: https://github.com/dlew/joda-time-android
+     *   Usage: The best date time API available
+     *   Author: Dan Lew
+     *   License: Apache License 2.0*/
+    api "net.danlew:android.joda:${joda_time_version}"
+
+    /**
+     * OkHttp
+     *   Homepage: http://square.github.io/okhttp/
+     *   Usage: For HTTP I/O that is optimized for mobile devices
+     *   Author: Square, Inc.
+     *   License: Apache License 2.0*/
+    implementation 'com.squareup.okhttp3:okhttp:3.8.0'
+
+    /**
+     * Simple-XML
+     *   Homepage: http://simple.sourceforge.net/
+     *   Usage: For annotation-based XML parsing
+     *   Author: Niall Gallagher
+     *   License: Apache License 2.0*/
+    implementation('org.simpleframework:simple-xml:2.7.1') {
+        exclude module: 'stax'
+        exclude module: 'stax-api'
+        exclude module: 'xpp3'
+    }
+
+    /**
+     * Retrofit
+     *   Homepage: http://square.github.io/retrofit/
+     *   Usage: For generating a REST api client
+     *   Author: Square, Inc.
+     *   License: Apache License 2.0*/
+    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
+    implementation 'com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0'
+    implementation('com.squareup.retrofit2:converter-simplexml:2.3.0') {
+        exclude module: 'stax'
+        exclude module: 'stax-api'
+        exclude module: 'xpp3'
+    }
+
+    testImplementation 'junit:junit:4.12'
+    testImplementation 'com.google.truth:truth:0.33'
+    testImplementation 'org.mockito:mockito-android:2.8.9'
+    testImplementation "joda-time:joda-time:${joda_time_version}"
+}

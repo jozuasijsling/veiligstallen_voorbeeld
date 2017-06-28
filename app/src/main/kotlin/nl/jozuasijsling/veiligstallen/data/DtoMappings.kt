@@ -21,7 +21,6 @@ import nl.jozuasijsling.veiligstallen.service.dto.BikeShedDto
 import nl.jozuasijsling.veiligstallen.service.dto.OpeningHoursDto
 import nl.jozuasijsling.veiligstallen.service.dto.SafeStorageDto
 import nl.jozuasijsling.veiligstallen.service.dto.SectionDto
-import okhttp3.HttpUrl
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
 
@@ -39,14 +38,14 @@ fun BikeShedDto.toDomainObject(): BikeShed {
             id!!,
             extractAddress(),
             extractCoordinates(),
-            HttpUrl.parse(url!!)!!,
+            url!!,
             bikeCapacity ?: 0,
             capacityTotal!!,
             referral!!.first().let { Integer.parseInt(it) },
             if (referral!!.size == 1) {
                 null
             } else {
-                HttpUrl.parse(referral!![1])
+                referral!![1]
             },
             sections?.map { it.toDomainObject() } ?: emptyList(),
             openingHours!!.toDomainObject(),
@@ -72,7 +71,7 @@ fun OpeningHoursDto.Day.describe(): String {
     if (remark != null) {
         return remark!!
     } else {
-        return "${open!!.toString()} - ${closed!!.toString()}"
+        return "${open!!} - ${closed!!}"
     }
 }
 
