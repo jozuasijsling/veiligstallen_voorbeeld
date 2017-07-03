@@ -18,38 +18,35 @@ package nl.jozuasijsling.veiligstallen.service.validation
 
 import nl.jozuasijsling.veiligstallen.service.dto.BikeShedDto
 import nl.jozuasijsling.veiligstallen.service.dto.OpeningHoursDto
-import nl.jozuasijsling.veiligstallen.service.dto.SectionDto
 import nl.jozuasijsling.veiligstallen.service.dto.SafeStorageDto
+import nl.jozuasijsling.veiligstallen.service.dto.SectionDto
 import okhttp3.HttpUrl
 
 
 fun SafeStorageDto.validate(): Boolean {
-    return dateTime?.isNotEmpty() ?: false
-            && bikeSheds?.all { it.validate() } ?: false
+    return dateTime.isNotEmpty()
+            && bikeSheds.all { it.validate() }
 }
 
 fun BikeShedDto.validate(): Boolean {
-    return name?.isNotEmpty() ?: false
+    return name.isNotEmpty()
             && description?.isNotEmpty() ?: true
-            && id?.isNotEmpty() ?: false
-            && municipality?.isNotEmpty() ?: false
+            && id.isNotEmpty()
+            && municipality.isNotEmpty()
             && street?.isNotEmpty() ?: true
             && postcode?.isNotEmpty() ?: true
             && city?.isNotEmpty() ?: true
-            && url != null && HttpUrl.parse(url) != null
-            && capacityTotal?.isNotEmpty() ?: false
-            && (capacityTotal!! == "Onbekend" || (capacityTotal?.toIntOrNull() != null
-            && bikeCapacity != null && capacityTotal!!.toInt() >= bikeCapacity!!))
+            && HttpUrl.parse(url) != null
+            && capacityTotal.isNotEmpty()
+            && (capacityTotal == "Onbekend" || capacityTotal.toIntOrNull() != null)
             && sections?.all { it.validate() } ?: true
-            && referral != null
-            && validateInlinedReferralPhrases()
-            && referral!!.all(String::isNotEmpty)
-            && openingHours?.validate() ?: false
-            && isStationShed != null && isStationShed!! in listOf("Ja", "Nee")
+            && (referral == null || (validateInlinedReferralPhrases() && referral.all(String::isNotEmpty)))
+            && openingHours?.validate() ?: true
+            && isStationShed != null && isStationShed in listOf("Ja", "Nee")
             && facilities?.isNotEmpty() ?: true
-            && (type == null || type!! in listOf("bewaakt", "geautomatiseerd", "onbewaakt", "buurtstalling", "fietskluizen", "toezicht", "fietstrommel"))
-            && (coordinates == null || coordinates!!.size == 2)
-            && access == null || access!!.trim() in listOf("Selfservice", "Deels selfservice")
+            && (type == null || type in listOf("bewaakt", "geautomatiseerd", "onbewaakt", "buurtstalling", "fietskluizen", "toezicht", "fietstrommel"))
+            && (coordinates == null || coordinates.size == 2)
+            && (access == null || access.trim() in listOf("Selfservice", "Deels selfservice"))
             && administrator?.isNotEmpty() ?: true
             && administratorContact?.isNotEmpty() ?: true
 }
@@ -57,33 +54,32 @@ fun BikeShedDto.validate(): Boolean {
 private fun BikeShedDto.validateInlinedReferralPhrases(): Boolean {
     return when (referral!!.size) {
         1 -> true
-        2 -> HttpUrl.parse(referral!![1]) != null
+        2 -> HttpUrl.parse(referral[1]) != null
         else -> false
     }
 }
 
 private fun SectionDto.validate(): Boolean {
-    return id?.isNotEmpty() ?: false
-            && name?.isNotEmpty() ?: false
-            && capacity != null
-            && unoccupied != null && unoccupied!! <= capacity!!
-            && occupied != null && occupied!! <= capacity!!
-            && unoccupied!! + occupied!! == capacity
+    return id.isNotEmpty() && name.isNotEmpty()
+    // Unfortunately, some of the data does not add up
+//            && available <= capacity
+//            && occupied <= capacity
+//            && available + occupied == capacity
 }
 
 private fun OpeningHoursDto.validate(): Boolean {
-    return monday?.validate() ?: false
-            && tuesday?.validate() ?: false
-            && wednesday?.validate() ?: false
-            && thursday?.validate() ?: false
-            && friday?.validate() ?: false
-            && saturday?.validate() ?: false
-            && sunday?.validate() ?: false
+    return monday.validate()
+            && tuesday.validate()
+            && wednesday.validate()
+            && thursday.validate()
+            && friday.validate()
+            && saturday.validate()
+            && sunday.validate()
 }
 
 private fun OpeningHoursDto.Day.validate(): Boolean {
     if (remark != null) {
-        return remark!!.isNotEmpty()
+        return remark.isNotEmpty()
     } else {
         return open?.isNotEmpty() ?: false
                 && closed?.isNotEmpty() ?: false

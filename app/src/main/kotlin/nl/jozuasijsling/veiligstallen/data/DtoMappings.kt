@@ -48,7 +48,7 @@ fun BikeShedDto.toDomainObject(): BikeShed {
                 referral!![1]
             },
             sections?.map { it.toDomainObject() } ?: emptyList(),
-            openingHours!!.toDomainObject(),
+            openingHours?.toDomainObject(),
             isStationShed == "Ja",
             facilities?.split(",") ?: emptyList(),
             localiseBikeShedType(type),

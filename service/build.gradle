@@ -4,7 +4,6 @@ apply plugin: 'kotlin'
 sourceSets {
     main.java.srcDirs += 'src/main/kotlin'
     test.java.srcDirs += 'src/test/kotlin'
-    test.resources.srcDirs += 'src/test/resources'
 }
 
 sourceCompatibility = "1.7"
@@ -79,6 +78,6 @@ dependencies {
 
     testImplementation 'junit:junit:4.12'
     testImplementation 'com.google.truth:truth:0.33'
-    testImplementation 'org.mockito:mockito-android:2.8.9'
+    testImplementation 'org.mockito:mockito-android:2.8.47'
     testImplementation "joda-time:joda-time:${joda_time_version}"
 }

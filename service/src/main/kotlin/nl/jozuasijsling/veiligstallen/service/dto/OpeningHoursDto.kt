@@ -18,39 +18,49 @@ package nl.jozuasijsling.veiligstallen.service.dto
 
 import org.simpleframework.xml.Element
 
-class OpeningHoursDto {
+class OpeningHoursDto(
 
-    var monday: Day? = null
-        @Element(name = "Ma") set
-        @Element(name = "Ma") get
-    var tuesday: Day? = null
-        @Element(name = "Di") set
-        @Element(name = "Di") get
-    var wednesday: Day? = null
-        @Element(name = "Wo") set
-        @Element(name = "Wo") get
-    var thursday: Day? = null
-        @Element(name = "Do") set
-        @Element(name = "Do") get
-    var friday: Day? = null
-        @Element(name = "Vr") set
-        @Element(name = "Vr") get
-    var saturday: Day? = null
-        @Element(name = "Za") set
-        @Element(name = "Za") get
-    var sunday: Day? = null
-        @Element(name = "Zo") set
-        @Element(name = "Zo") get
+        @param:Element(name = "Ma")
+        @get:Element(name = "Ma")
+        val monday: Day,
 
-    class Day {
-        var open: String? = null
-            @Element(name = "Open", required = false) set
-            @Element(name = "Open", required = false) get
-        var closed: String? = null
-            @Element(name = "Dicht", required = false) set
-            @Element(name = "Dicht", required = false) get
-        var remark: String? = null
-            @Element(name = "Opmerking", required = false) set
-            @Element(name = "Opmerking", required = false) get
-    }
+        @param:Element(name = "Di")
+        @get:Element(name = "Di")
+        val tuesday: Day,
+
+        @param:Element(name = "Wo")
+        @get:Element(name = "Wo")
+        val wednesday: Day,
+
+        @param:Element(name = "Do")
+        @get:Element(name = "Do")
+        val thursday: Day,
+
+        @param:Element(name = "Vr")
+        @get:Element(name = "Vr")
+        val friday: Day,
+
+        @param:Element(name = "Za")
+        @get:Element(name = "Za")
+        val saturday: Day,
+
+        @param:Element(name = "Zo")
+        @get:Element(name = "Zo")
+        val sunday: Day
+
+) {
+    class Day(
+
+            @param:Element(name = "Open", required = false)
+            @get:Element(name = "Open", required = false)
+            val open: String?,
+
+            @param:Element(name = "Dicht", required = false)
+            @get:Element(name = "Dicht", required = false)
+            val closed: String?,
+
+            @param:Element(name = "Opmerking", required = false)
+            @get:Element(name = "Opmerking", required = false)
+            val remark: String?
+    )
 }

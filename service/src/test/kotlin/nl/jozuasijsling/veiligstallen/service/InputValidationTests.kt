@@ -22,17 +22,16 @@ import nl.jozuasijsling.veiligstallen.service.validation.validate
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
+import org.junit.runners.Parameterized.Parameters
 import org.simpleframework.xml.core.Persister
-import java.util.*
 
 @RunWith(value = Parameterized::class)
 class InputValidationTests(date: String) {
 
     companion object {
-        @JvmStatic
-        @Parameterized.Parameters(name = "File dated {0} passes validation")
+        @JvmStatic @Parameters(name = "File dated {0} passes validation")
         fun data(): Iterable<Array<String>> {
-            return Arrays.asList(arrayOf("2017-03-25"), arrayOf("2017-06-08"))
+            return arrayOf("2017-03-25", "2017-06-08", "2017-06-30").map { arrayOf(it) }
         }
     }
 

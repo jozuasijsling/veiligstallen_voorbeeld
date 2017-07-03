@@ -21,12 +21,14 @@ import org.simpleframework.xml.ElementList
 import org.simpleframework.xml.Root
 
 @Root(name = "FietsenStallingen")
-class SafeStorageDto {
+class SafeStorageDto(
 
-    var dateTime: String? = null
-        @Element(name = "DateTime") set
-        @Element(name = "DateTime") get
-    var bikeSheds: List<BikeShedDto>? = null
-        @ElementList(name = "FietsenStalling", inline = true, type = BikeShedDto::class) set
-        @ElementList(name = "FietsenStalling", inline = true, type = BikeShedDto::class) get
-}
+        @param:Element(name = "DateTime")
+        @get:Element(name = "DateTime")
+        val dateTime: String,
+
+        @param:ElementList(name = "FietsenStalling", inline = true)
+        @get:ElementList(name = "FietsenStalling", inline = true)
+        val bikeSheds: List<BikeShedDto>
+
+)

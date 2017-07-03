@@ -20,21 +20,25 @@ import org.simpleframework.xml.Element
 import org.simpleframework.xml.Root
 
 @Root(name = "Sectie")
-class SectionDto {
+class SectionDto(
 
-    var id: String? = null
-        @Element(name = "ID") set
-        @Element(name = "ID") get
-    var name: String? = null
-        @Element(name = "Naam") set
-        @Element(name = "Naam") get
-    var capacity: Int? = null
-        @Element(name = "Capaciteit") set
-        @Element(name = "Capaciteit") get
-    var unoccupied: Int? = null
-        @Element(name = "Vrij") set
-        @Element(name = "Vrij") get
-    var occupied: Int? = null
-        @Element(name = "Bezet") set
-        @Element(name = "Bezet") get
-}
+        @param:Element(name = "ID")
+        @get:Element(name = "ID")
+        val id: String,
+
+        @param:Element(name = "Naam", data = true)
+        @get:Element(name = "Naam", data = true)
+        val name: String,
+
+        @param:Element(name = "Capaciteit")
+        @get:Element(name = "Capaciteit")
+        val capacity: Int,
+
+        @param:Element(name = "Vrij")
+        @get:Element(name = "Vrij")
+        val available: Int,
+
+        @param:Element(name = "Bezet")
+        @get:Element(name = "Bezet")
+        val occupied: Int
+)
