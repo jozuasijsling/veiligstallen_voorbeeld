@@ -4,6 +4,7 @@ android:
   # latest sdk
   - tools
   - platform-tools
+  - tools # workaround to get Travis to accept latest SDK
 
   # build config
   - build-tools-26.0.0
