@@ -1,7 +1,7 @@
-/.*
+.*/
 
-/build
-
-veiligstallen.iml
+build/
 
 local.properties
+
+veiligstallen_voorbeeld.iml
