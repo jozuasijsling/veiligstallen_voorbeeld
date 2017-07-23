@@ -9,9 +9,8 @@
 -dontskipnonpubliclibraryclasses
 -verbose
 
--keepattributes *Annotation*
--keep public class com.google.vending.licensing.ILicensingService
--keep public class com.android.vending.licensing.ILicensingService
+# Attributes are needed for reflection, proguard should not strip them (yet)
+-keepattributes *Annotation*, Signature, InnerClasses, EnclosingMethod
 
 # For native methods, see http://proguard.sourceforge.net/manual/examples.html#native
 -keepclasseswithmembernames class * {
@@ -47,55 +46,37 @@
 # The support library contains references to newer platform versions.
 # Don't warn about those in case this app is linking against an older
 # platform version.  We know about them, and they are safe.
+-dontnote android.support.**
 -dontwarn android.support.**
 
-# Understand the @Keep support annotation.
--keep class android.support.annotation.Keep
+# Proguard has a known issue where it duplicates the apache http commons
+# library before running its scans.
+# https://issuetracker.google.com/issues/37070898
+-dontnote org.apache.http.**
+-dontnote android.net.http.HttpResponseCache
+-dontnote android.net.http.SslCertificate
+-dontnote android.net.http.SslCertificate$DName
+-dontnote android.net.http.SslError
 
--keep @android.support.annotation.Keep class * {*;}
 
--keepclasseswithmembers class * {
-    @android.support.annotation.Keep <methods>;
-}
-
--keepclasseswithmembers class * {
-    @android.support.annotation.Keep <fields>;
-}
-
--keepclasseswithmembers class * {
-    @android.support.annotation.Keep <init>(...);
-}
-
-# SimpleXML uses the XML stream package from javax, which is not available on Android.
+# SimpleXML uses the XML stream package from javax, not available on Android
 -dontwarn javax.xml.stream.**
 
-# Several libraries use annotations from javax, which is not available on Android
+# Several libraries use annotations from javax, not available on Android
 -dontwarn javax.annotation.**
 
 # Missing non-runtime annotation can be ignored
 -dontwarn org.codehaus.mojo.animal_sniffer.IgnoreJRERequirement
 
 
--keep class com.google.android.gms.maps.MapFragment
+# SimpleXml classes specified here must remain on the classpath
+-keep interface org.simpleframework.xml.core.Label { public *; }
+-keep class * implements org.simpleframework.xml.core.Label { public *; }
+-keep interface org.simpleframework.xml.core.Parameter { public *; }
+-keep class * implements org.simpleframework.xml.core.Parameter { public *; }
+-keep interface org.simpleframework.xml.core.Extractor { public *; }
+-keep class * implements org.simpleframework.xml.core.Extractor { public *; }
+-dontnote org.simpleframework.xml.**
 
-
-# SimpleXml uses reflection, these classes must remain on the classpath
-
--keep interface org.simpleframework.xml.core.Label {
-   public *;
-}
--keep class * implements org.simpleframework.xml.core.Label {
-   public *;
-}
--keep interface org.simpleframework.xml.core.Parameter {
-   public *;
-}
--keep class * implements org.simpleframework.xml.core.Parameter {
-   public *;
-}
--keep interface org.simpleframework.xml.core.Extractor {
-   public *;
-}
--keep class * implements org.simpleframework.xml.core.Extractor {
-   public *;
-}
+# DTOs are mapped from XML using reflection
+-keep class nl.jozuasijsling.veiligstallen.service.dto.** { *; }
