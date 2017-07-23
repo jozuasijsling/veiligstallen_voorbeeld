@@ -40,7 +40,7 @@ fun BikeShedDto.validate(): Boolean {
             && capacityTotal.isNotEmpty()
             && (capacityTotal == "Onbekend" || capacityTotal.toIntOrNull() != null)
             && sections?.all { it.validate() } ?: true
-            && (referral == null || (validateInlinedReferralPhrases() && referral.all(String::isNotEmpty)))
+            && (referral == null || validateInlinedReferralPhrases())
             && openingHours?.validate() ?: true
             && isStationShed != null && isStationShed in listOf("Ja", "Nee")
             && facilities?.isNotEmpty() ?: true
@@ -52,11 +52,7 @@ fun BikeShedDto.validate(): Boolean {
 }
 
 private fun BikeShedDto.validateInlinedReferralPhrases(): Boolean {
-    return when (referral!!.size) {
-        1 -> true
-        2 -> HttpUrl.parse(referral[1]) != null
-        else -> false
-    }
+    return HttpUrl.parse(referral) != null
 }
 
 private fun SectionDto.validate(): Boolean {

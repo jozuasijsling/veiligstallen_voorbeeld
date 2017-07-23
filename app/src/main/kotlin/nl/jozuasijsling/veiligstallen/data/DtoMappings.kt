@@ -27,26 +27,21 @@ import org.joda.time.format.DateTimeFormat
 
 private val timestampFormat = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss")
 
-fun SafeStorageDto.toDomainObject(): SafeStorage {
-    return SafeStorage(DateTime.parse(dateTime, timestampFormat),
-            bikeSheds!!.map { it.toDomainObject() })
-}
+fun SafeStorageDto.toDomainObject() =
+        SafeStorage(DateTime.parse(dateTime, timestampFormat),
+                bikeSheds.map { it.toDomainObject() })
+
 
 fun BikeShedDto.toDomainObject(): BikeShed {
-    return BikeShed(name!!,
+    return BikeShed(name,
             description ?: "Unknown",
-            id!!,
+            id,
             extractAddress(),
             extractCoordinates(),
-            url!!,
+            url,
             bikeCapacity ?: 0,
-            capacityTotal!!,
-            referral!!.first().let { Integer.parseInt(it) },
-            if (referral!!.size == 1) {
-                null
-            } else {
-                referral!![1]
-            },
+            capacityTotal,
+            referral,
             sections?.map { it.toDomainObject() } ?: emptyList(),
             openingHours?.toDomainObject(),
             isStationShed == "Ja",
@@ -57,41 +52,24 @@ fun BikeShedDto.toDomainObject(): BikeShed {
             administratorContact)
 }
 
-fun OpeningHoursDto.toDomainObject(): OpeningHours {
-    return OpeningHours(monday!!.describe(),
-            tuesday!!.describe(),
-            wednesday!!.describe(),
-            thursday!!.describe(),
-            friday!!.describe(),
-            saturday!!.describe(),
-            sunday!!.describe())
-}
+fun OpeningHoursDto.toDomainObject() =
+        OpeningHours(monday.describe(),
+                tuesday.describe(), wednesday.describe(),
+                thursday.describe(), friday.describe(),
+                saturday.describe(), sunday.describe())
 
-fun OpeningHoursDto.Day.describe(): String {
-    if (remark != null) {
-        return remark!!
-    } else {
-        return "${open!!} - ${closed!!}"
-    }
-}
 
-fun SectionDto.toDomainObject(): InnerSection {
-    return InnerSection(id!!, name!!, capacity!!, unoccupied!!, occupied!!)
-}
+private fun OpeningHoursDto.Day.describe() =
+        remark ?: "${open!!} - ${closed!!}"
 
-fun BikeShedDto.extractCoordinates(): GeoLocation? {
-    val coordinatesVal = coordinates
-    if (coordinatesVal == null) {
-        return null
-    } else {
-        return GeoLocation(coordinatesVal[1], coordinatesVal[0])
-    }
-}
 
-fun BikeShedDto.extractAddress(): Address? {
-    if (municipality == null && street == null && postcode == null && city == null) {
-        return null
-    } else {
-        return Address(municipality ?: "", street ?: "", postcode ?: "", city ?: "")
-    }
-}
+private fun SectionDto.toDomainObject() =
+        InnerSection(id, name, capacity, available, occupied)
+
+
+private fun BikeShedDto.extractCoordinates() =
+        coordinates?.let { GeoLocation(it[1], it[0]) }
+
+
+private fun BikeShedDto.extractAddress() =
+        Address(municipality, street ?: "", postcode ?: "", city ?: "")

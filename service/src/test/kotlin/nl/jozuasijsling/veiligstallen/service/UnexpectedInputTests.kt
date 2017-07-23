@@ -16,18 +16,16 @@
 
 package nl.jozuasijsling.veiligstallen.service
 
-import nl.jozuasijsling.veiligstallen.service.dto.SafeStorageDto
+import nl.jozuasijsling.veiligstallen.test.deserializeFromResource
 import org.junit.Test
 import org.simpleframework.xml.core.PersistenceException
-import org.simpleframework.xml.core.Persister
 
 class UnexpectedInputTests {
 
     @Test(expected = PersistenceException::class)
     fun emptyFileFailsValidation() {
 
-        ClassLoader.getSystemResourceAsStream("resources/empty.xml").use {
-            Persister().read(SafeStorageDto::class.java, it)
-        }
+        deserializeFromResource("resources/empty.xml")
+
     }
 }

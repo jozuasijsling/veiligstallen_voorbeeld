@@ -115,9 +115,9 @@ class BikeShedDto(
         @get:Element(name = "Abonnementen", required = false)
         val subscriptions: SubscriptionsDto?,
 
-        @param:ElementList(entry = "Verwijssysteem", inline = true, required = false)
-        @get:ElementList(entry = "Verwijssysteem", inline = true, required = false)
-        val referral: List<String>?,
+        @param:Element(name = "Verwijssysteem", required = false)
+        @get:Element(name = "Verwijssysteem", required = false)
+        val referral: String?,
 
         @param:ElementList(name = "Secties", required = false)
         @get:ElementList(name = "Secties", required = false)

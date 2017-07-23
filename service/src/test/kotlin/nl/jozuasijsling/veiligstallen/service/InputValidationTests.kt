@@ -17,13 +17,12 @@
 package nl.jozuasijsling.veiligstallen.service
 
 import com.google.common.truth.Truth.assertThat
-import nl.jozuasijsling.veiligstallen.service.dto.SafeStorageDto
 import nl.jozuasijsling.veiligstallen.service.validation.validate
+import nl.jozuasijsling.veiligstallen.test.deserializeFromResource
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
 import org.junit.runners.Parameterized.Parameters
-import org.simpleframework.xml.core.Persister
 
 @RunWith(value = Parameterized::class)
 class InputValidationTests(date: String) {
@@ -31,7 +30,8 @@ class InputValidationTests(date: String) {
     companion object {
         @JvmStatic @Parameters(name = "File dated {0} passes validation")
         fun data(): Iterable<Array<String>> {
-            return arrayOf("2017-03-25", "2017-06-08", "2017-06-30").map { arrayOf(it) }
+            return arrayOf("2017-06-30", "2017-07-23")
+                    .map { arrayOf(it) }
         }
     }
 
@@ -41,10 +41,8 @@ class InputValidationTests(date: String) {
     @Test
     fun testFilePassesValidation() {
 
-        val dto = ClassLoader.getSystemResourceAsStream(filename).use {
-            Persister().read(SafeStorageDto::class.java, it)
-        }
+        val dto = deserializeFromResource(filename)
+
         assertThat(dto.validate()).isTrue()
     }
-
 }
