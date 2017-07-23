@@ -4,7 +4,6 @@ android:
   # latest sdk
   - tools
   - platform-tools
-  - tools # workaround to get Travis to accept latest SDK
 
   # build config
   - build-tools-26.0.0
@@ -15,3 +14,7 @@ android:
   - extra-google-m2repository
   - extra-android-m2repository
   - addon-google_apis-google-26
+
+  licenses:
+  - 'android-sdk-.+'
+  - 'google-sdk-.+'
