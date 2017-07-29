@@ -31,7 +31,7 @@ dependencies {
      *  Usage: Reactive control flow
      *  Author: Netflix, Inc.
      *  License: Apache License 2.0*/
-    api 'io.reactivex.rxjava2:rxjava:2.1.1'
+    api 'io.reactivex.rxjava2:rxjava:2.1.2'
     api 'io.reactivex.rxjava2:rxkotlin:2.1.0'
 
     /**
@@ -78,6 +78,6 @@ dependencies {
 
     testImplementation 'junit:junit:4.12'
     testImplementation 'com.google.truth:truth:0.34'
-    testImplementation 'org.mockito:mockito-android:2.8.47'
+    testImplementation 'org.mockito:mockito-core:2.8.47'
     testImplementation "joda-time:joda-time:${joda_time_version}"
 }

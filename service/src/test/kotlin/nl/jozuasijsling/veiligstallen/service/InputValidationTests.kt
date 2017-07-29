@@ -41,7 +41,7 @@ class InputValidationTests(date: String) {
     companion object {
         @JvmStatic @Parameters(name = "File dated {0} passes validation")
         fun data(): Iterable<Array<String>> {
-            return arrayOf("2017-06-30", "2017-07-23")
+            return arrayOf("2017-06-30", "2017-07-23", "2017-07-29")
                     .map { arrayOf(it) }
         }
     }
