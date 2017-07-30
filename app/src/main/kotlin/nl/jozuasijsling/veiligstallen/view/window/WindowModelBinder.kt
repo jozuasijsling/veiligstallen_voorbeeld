@@ -17,9 +17,10 @@
 package nl.jozuasijsling.veiligstallen.view.window
 
 import android.app.Activity
+import nl.jozuasijsling.veiligstallen.platform.decoupling.DecoupledActivityComponent
 
 interface WindowModelBinder {
 
-    fun bind(activity: Activity)
+    fun bind(activity: Activity, component: DecoupledActivityComponent)
 
 }

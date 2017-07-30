@@ -16,60 +16,35 @@
 
 package nl.jozuasijsling.veiligstallen.view.adapters
 
-import android.app.Activity
-import android.content.Context
-import android.content.ContextWrapper
 import android.databinding.BindingAdapter
-import android.os.Bundle
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.OnMapReadyCallback
+import nl.jozuasijsling.veiligstallen.platform.decoupling.DecoupledActivityComponent
+import nl.jozuasijsling.veiligstallen.platform.decoupling.PlatformCallback.OnLowMemory
+import nl.jozuasijsling.veiligstallen.platform.decoupling.PlatformCallback.OnSaveInstanceState
+import nl.jozuasijsling.veiligstallen.view.adapters.LifecycleEvent.*
 
 @BindingAdapter("onMapReady")
-fun setGoogleMapCallback(mapView: MapView, callback: OnMapReadyCallback) {
+fun setGoogleMapCallback(component: DecoupledActivityComponent,
+                         mapView: MapView,
+                         callback: OnMapReadyCallback) {
 
     mapView.getMapAsync(callback::onMapReady)
 
-    val activity = mapView.context.getActivityContext()
-    val source = activity as LifecycleSource
-    source.listener = object : LifecycleCallbacks {
-        override fun onCreated(bundle: Bundle?) {
-            mapView.onCreate(bundle)
-        }
-
-        override fun onStarted() {
-            mapView.onStart()
-        }
-
-        override fun onResumed() {
-            mapView.onResume()
-        }
-
-        override fun onPaused() {
-            mapView.onPause()
-        }
-
-        override fun onStopped() {
-            mapView.onStop()
-        }
-
-        override fun onSaveInstanceState(bundle: Bundle?) {
-            mapView.onSaveInstanceState(bundle)
-        }
-
-        override fun onDestroyed() {
-            mapView.onDestroy()
-        }
-
-        override fun onLowMemory() {
-            mapView.onLowMemory()
+    component.lifecycle.subscribe {
+        when (it) {
+            is Create -> mapView.onCreate(it.bundle)
+            is Start -> mapView.onStart()
+            is Resume -> mapView.onResume()
+            is Pause -> mapView.onPause()
+            is Stop -> mapView.onStop()
+            is Destroy -> mapView.onDestroy()
         }
     }
-}
-
-private fun Context.getActivityContext(): Activity {
-    when (this) {
-        is Activity -> return this
-        is ContextWrapper -> return this.baseContext.getActivityContext()
-        else -> throw IllegalArgumentException("Context must be an activity")
+    component.platformCallbacks.subscribe {
+        when (it) {
+            is OnSaveInstanceState -> mapView.onSaveInstanceState(it.outState)
+            is OnLowMemory -> mapView.onLowMemory()
+        }
     }
 }

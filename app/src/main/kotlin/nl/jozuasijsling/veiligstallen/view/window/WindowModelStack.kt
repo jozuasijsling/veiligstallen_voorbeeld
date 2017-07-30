@@ -17,20 +17,16 @@
 package nl.jozuasijsling.veiligstallen.view.window
 
 import android.app.Activity
+import nl.jozuasijsling.veiligstallen.platform.decoupling.DecoupledActivityComponent
 import nl.jozuasijsling.veiligstallen.view.screen.MapScreen
-import java.util.ArrayDeque
+import java.util.*
 
 object WindowModelStack {
 
     private val binderStack = ArrayDeque<WindowModelBinder>()
+            .apply { push(MapScreenBinder(MapScreen())) }
 
-    fun bind(activity: Activity) {
-
-        if (binderStack.isEmpty()) {
-            binderStack.push(MapScreenBinder(MapScreen()))
-        }
-
-        binderStack.peek().bind(activity)
-    }
+    fun bind(activity: Activity, component: DecoupledActivityComponent) =
+            binderStack.peek().bind(activity, component)
 
 }

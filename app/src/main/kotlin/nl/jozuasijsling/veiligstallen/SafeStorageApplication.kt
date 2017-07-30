@@ -18,11 +18,13 @@ package nl.jozuasijsling.veiligstallen
 
 import android.app.Application
 import net.danlew.android.joda.JodaTimeAndroid
+import nl.jozuasijsling.veiligstallen.view.adapters.LifecycleListener
 
 class SafeStorageApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        JodaTimeAndroid.init(this);
+        JodaTimeAndroid.init(this)
+        registerActivityLifecycleCallbacks(LifecycleListener)
     }
 }

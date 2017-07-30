@@ -48,7 +48,7 @@
         <activity-alias
             android:name=".MapLauncherActivity"
             android:label="@string/title_activity_maps"
-            android:targetActivity=".LauncherActivity">
+            android:targetActivity=".platform.decoupling.DecoupledActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -58,7 +58,7 @@
 
 
         <activity
-            android:name=".LauncherActivity"
+            android:name=".platform.decoupling.DecoupledActivity"
             android:configChanges="${configChanges}" />
     </application>
 

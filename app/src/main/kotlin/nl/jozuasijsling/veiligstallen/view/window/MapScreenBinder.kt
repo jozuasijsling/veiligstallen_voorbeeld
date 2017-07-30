@@ -20,12 +20,14 @@ import android.app.Activity
 import android.databinding.DataBindingUtil
 import nl.jozuasijsling.veiligstallen.R
 import nl.jozuasijsling.veiligstallen.databinding.MapScreenBinding
+import nl.jozuasijsling.veiligstallen.platform.decoupling.DecoupledActivityComponent
 import nl.jozuasijsling.veiligstallen.view.screen.MapScreen
 
 class MapScreenBinder(val viewModel: MapScreen) : WindowModelBinder {
 
-    override fun bind(activity: Activity) {
-        val binding = DataBindingUtil.setContentView<MapScreenBinding?>(activity, R.layout.map_screen)!!
+    override fun bind(activity: Activity, component: DecoupledActivityComponent) {
+        val binding = DataBindingUtil.setContentView<MapScreenBinding>(
+                activity, R.layout.map_screen, component)
         binding.map = viewModel.map
         binding.searchBar = viewModel.searchBar
     }
